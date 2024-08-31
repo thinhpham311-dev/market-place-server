@@ -62,14 +62,13 @@ export const loginDeliveryPartner = async (req, reply) => {
     }
 }
 
-export const refreshToken = async (req, reply) => {
-    const { refreshToken } = req.body;
-
-    if (!refreshToken) {
-        return reply.status(401).send({ message: "Refresh token required" })
-    }
-
+export const refreshToken = async (req, reply) => {    
     try {
+        const { refreshToken } = req.body;
+    
+        if (!refreshToken) {
+            return reply.status(401).send({ message: "Refresh token required" })
+        }
         const decode = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET)
         let user;
         if (decode.role === "Customer") {

@@ -1,8 +1,8 @@
 import { Product } from "../../models/index.js";
 
 export const getProductsByCategoryId = async (req, reply) => {
-    const { categoryId } = req.params;
     try {
+        const { categoryId } = req.params;
         const products = await Product.find({ category: categoryId }).select("-category").exec();
         return reply.status(200).send({
             message: "Get products list successfully",
