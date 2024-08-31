@@ -68,6 +68,9 @@ export const confirmOrder = async (req, reply) => {
             longtitude: deliveryPersonLocation?.longtitude,
             address: deliveryPersonLocation?.address || ""
         }
+
+        req.server.io.to(orderId).emit("orderConfirmed", order)
+
         await order.save();
 
         return reply.status(200).send({ message: "Order confirmed successfully" });
@@ -104,6 +107,9 @@ export const updateOrderStatus = async (req, reply) => {
         order.status = status;
         order.deliveryPartner = userId;
         order.deliveryPersonLocation = deliveryPersonLocation;
+
+        req.server.io.to(orderId).emit("liveTrackingUpdates", order)
+
         await order.save()
         return reply.status(200).send({ message: "Order confirmed successfully", });
     } catch (error) {
