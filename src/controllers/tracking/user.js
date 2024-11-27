@@ -1,4 +1,5 @@
 import { Customer, DeliveryPartner } from '../../models/user.js'
+import { handleError } from "../../utils/errorHandler.js";
 
 export const updateUser = async (req, reply) => {
     try {
@@ -31,12 +32,11 @@ export const updateUser = async (req, reply) => {
             return reply.status(404).send({ message: "User not found" })
         }
 
-        return reply.status(200).send({
-            message: "User updated successfully",
-            user: updatedUser
-        })
+        return reply.status(200).send({ message: "User updated successfully", user: updatedUser })
     }
     catch (error) {
-        return reply.status(500).send({ message: "Failed to update user", error })
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({ message, details });
     }
 }

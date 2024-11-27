@@ -1,5 +1,6 @@
 import { Customer, DeliveryPartner } from "../../models/user.js";
 import jwt from 'jsonwebtoken'
+import { handleError } from "../../utils/errorHandler.js";
 
 
 const generateTokens = (user) => {
@@ -35,7 +36,12 @@ export const loginCustomer = async (req, reply) => {
         const { accessToken, refreshToken } = generateTokens(customer);
         return reply.status(200).send({ message: customer ? "Login successful" : "Customer created and logged in", accessToken, refreshToken, customer })
     } catch (error) {
-        return reply.status(500).send({ message: "An error occurred", error })
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({
+            message,
+            details,
+        });
     }
 }
 
@@ -58,14 +64,19 @@ export const loginDeliveryPartner = async (req, reply) => {
 
         return reply.send({ message: "Login successful", accessToken, refreshToken, deliveryPartner })
     } catch (error) {
-        return reply.status(500).send({ message: "An error occurred", error })
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({
+            message,
+            details,
+        });
     }
 }
 
-export const refreshToken = async (req, reply) => {    
+export const refreshToken = async (req, reply) => {
     try {
         const { refreshToken } = req.body;
-    
+
         if (!refreshToken) {
             return reply.status(401).send({ message: "Refresh token required" })
         }
@@ -76,7 +87,7 @@ export const refreshToken = async (req, reply) => {
         } else if (decode.role === "DeliveryPartner") {
             user = await DeliveryPartner.findById(decode.userId)
         } else {
-            return reply.status(403).send({ message: "Invalid role" })
+            return reply.status(404).send({ message: "Invalid role" });
         }
 
         if (!user) {
@@ -90,29 +101,38 @@ export const refreshToken = async (req, reply) => {
             refreshToken: newRefreshToken
         })
     } catch (error) {
-        return reply.status(403).send({ message: "Invalid Refresh token" })
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({
+            message,
+            details,
+        });
     }
 }
 
 export const fetchUser = async (req, reply) => {
     try {
-        const { userId, role } = req.body;
+        const { userId, role } = req.user;
         let user;
+
         if (role === "Customer") {
             user = await Customer.findById(userId)
         } else if (role === "DeliveryPartner") {
             user = await DeliveryPartner.findById(userId)
         } else {
-            return reply.status(403).send({ message: "Invalid role" })
+            return reply.status(403).send({ message: "Invalid role" });
         }
 
         if (!user) {
-            return reply.status(404).send({ message: "User not found" })
+            return reply.status(404).send({ message: "User not found" });
         }
-        return reply.status(200).send({
-            message: "User fetched successful"
-        })
+        return reply.status(200).send({ message: "User fetched successful", user })
     } catch (error) {
-        return reply.status(500).send({ message: "An error Occurred", error })
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({
+            message,
+            details,
+        });
     }
 }

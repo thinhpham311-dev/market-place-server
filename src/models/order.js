@@ -13,8 +13,7 @@ const orderSchema = new mongoose.Schema({
     },
     deliveryPartner: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "DeliveryPartner",
-        required: true
+        ref: "DeliveryPartner"
     },
     branch: {
         type: mongoose.Schema.Types.ObjectId,

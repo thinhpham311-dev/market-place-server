@@ -4,23 +4,18 @@ import * as AdminJSMongoose from '@adminjs/mongoose'
 import * as Models from '../models/index.js'
 import { authenticate, COOKIE_PASSWORD, sessionStore } from './config.js'
 import { dark, light, noSidebar } from '@adminjs/themes'
-
+import { componentLoader, Components } from '../components/index.js'
+import {
+    userParent,
+    productParent,
+    orderParent,
+    branding
+} from '../constants/icons.js';
+import { productProperties, categoriesProperties } from '../constants/properties.js'
 
 AdminJS.registerAdapter(AdminJSMongoose)
-const userParent = {
-    name: 'User',
-    icon: 'User',
-}
 
-const productParent = {
-    name: 'Product',
-    icon: 'ShoppingBag',
-}
 
-const orderParent = {
-    name: 'Order',
-    icon: 'Truck',
-}
 export const admin = new AdminJS({
     resources: [
         {
@@ -28,7 +23,8 @@ export const admin = new AdminJS({
             options: {
                 parent: userParent,
                 listProperties: ["name", "phone", "role", "isActivated"],
-                filterProperties: ["phone", "role"]
+                filterProperties: ["phone", "role"],
+
             }
         },
         {
@@ -51,21 +47,25 @@ export const admin = new AdminJS({
             resource: Models.Branch,
             options: {
                 parent: productParent,
-                filterProperties: ["name", "address"]
+                filterProperties: ["name", "address"],
             }
         },
         {
             resource: Models.Category,
             options: {
                 parent: productParent,
-                filterProperties: ["name"]
+                filterProperties: ["name"],
+                listProperties: ["image", "name"],
+                properties: categoriesProperties(Components)
             }
         },
         {
             resource: Models.Product,
             options: {
                 parent: productParent,
-                filterProperties: ["name", "price", "discountPrice"]
+                filterProperties: ["name", "price", "discountPrice"],
+                listProperties: ["image", "name", "quantity", "price", "discountPrice", "category"],
+                properties: productProperties(Components)
             }
         },
         {
@@ -83,21 +83,38 @@ export const admin = new AdminJS({
             }
         },
     ],
-    branding: {
-        companyName: "Blinkit",
-        withMadeWithLove: true,
-        favicon: 'https://res.cloudinary.com/dgincjt1i/image/upload/v1724934782/blinkit-seeklogo_akt6qi.svg',
-        logo: "https://res.cloudinary.com/dgincjt1i/image/upload/v1724935053/blinkit-logo_casestudy_afb9yx.webp",
+    componentLoader,
+    dashboard: {
+        component: Components.Dashboard,
     },
-    overrides: {
-        colors: {
-            primary100: 'teal',
-        },
+    branding,
+    locale: {
+        language: 'en',
+        translations: {
+            en: {
+                components: {
+                    Login: {
+                        welcomeHeader: "Welcome to Market Place Accounts",
+                        welcomeMessage: "Welcome to Admin Panel",
+                        welcomeImage: "",
+                        properties: {
+                            email: "Email user",
+                            password: "Password user"
+                        },
+                        loginButton: "Submit"
+                    }
+                },
+                messages: {
+                    welcomeOnBoard_title: 'New dashboard title',
+                },
+            }
+
+        }
     },
-    defaultTheme: light.id,
+    defaultTheme: dark.id,
     availableThemes: [dark, light, noSidebar],
-    rootPath: "/admin"
-})
+    rootPath: "/admin",
+});
 
 
 export const buildAdminRouter = async (app) => {

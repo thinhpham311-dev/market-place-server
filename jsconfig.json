@@ -4,6 +4,8 @@
         "target": "ES6",
         "moduleResolution": "node",
         "allowSyntheticDefaultImports": true,
+        "jsx": "react",
+        "baseUrl": "."
     },
     "exclude": [
         "node_modules"

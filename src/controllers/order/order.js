@@ -1,4 +1,6 @@
 import { Order, Customer, Branch, DeliveryPartner } from "../../models/index.js"
+import { handleError } from "../../utils/errorHandler.js";
+
 
 export const createOrder = async (req, reply) => {
     try {
@@ -26,21 +28,18 @@ export const createOrder = async (req, reply) => {
                 address: customerData.address || "No address available"
             },
             pickupLocation: {
-                latitude: branchData.location.latitude,
-                longtitude: branchData.location.longtitude,
+                latitude: branchData.liveLocation.latitude,
+                longtitude: branchData.liveLocation.longtitude,
                 address: branchData.address || "No address available"
             }
         });
-
         const savedOrder = await newOrder.save();
-        return reply.status(200).send({
-            message: "Created orders successfully",
-            order: savedOrder
-        });
+        return reply.status(200).send({ message: "Created orders successfully", order: savedOrder });
 
-        // const createdOrder = Order.create
     } catch (error) {
-        return reply.status(500).send({ message: "Failed to create order", error });
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({ message, details });
     }
 }
 
@@ -75,22 +74,24 @@ export const confirmOrder = async (req, reply) => {
 
         return reply.status(200).send({ message: "Order confirmed successfully" });
     } catch (error) {
-        return reply.status(500).send({ message: "Failed to confirm order" })
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({ message, details });
     }
 }
 
 export const updateOrderStatus = async (req, reply) => {
     try {
-        const {orderId} = req.params;
-        const {status, deliveryPersonLocation} = req.body;
-        const {userId} = req.user;
+        const { orderId } = req.params;
+        const { status, deliveryPersonLocation } = req.body;
+        const { userId } = req.user;
 
         const deliveryPerson = await DeliveryPartner.findById(userId);
-        
-        if(!deliveryPerson){
-            return reply.status(404).send({message: "Delivery Person not found"});
+
+        if (!deliveryPerson) {
+            return reply.status(404).send({ message: "Delivery Person not found" });
         }
-        
+
         const order = await Order.findById(orderId);
         if (!order) {
             return reply.status(404).send({ message: "Order not found" });
@@ -113,65 +114,62 @@ export const updateOrderStatus = async (req, reply) => {
         await order.save()
         return reply.status(200).send({ message: "Order confirmed successfully", });
     } catch (error) {
-        return reply.status(500).send({ message: "Failed to update order status" });
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({ message, details });
     }
 }
 
 
 export const getOrders = async (req, reply) => {
-    try{
-        const {status, customerId, deliveryPartnerId, branchId } = req.body;
+
+    try {
+        const { status, customerId, deliveryPartnerId, branchId } = req.query;
         let query = {};
 
-        if(status){
+        if (status) {
             query.status = status;
         }
 
-        if(customerId){
+        if (customerId) {
             query.customer = customerId;
         }
 
-        if(deliveryPartnerId){
+        if (deliveryPartnerId) {
             query.deliveryPartner = deliveryPartnerId;
-        }
-
-        if(branchId){
             query.branch = branchId;
         }
 
-        const orders = await Order.find(query).populate(
-            "customer branch items.item deliveryPartner"
-        )
+        const orders = await Order.find(query).populate("customer branch items.item deliveryPartner")
 
-        return reply.status(200).send({
-            message: "Get Orders List successfully",
-            orders
-        });
+        return reply.status(200).send({ message: "Get Orders List successfully", orders });
 
-    }catch(error){
-        return reply.status(500).send({message: "Failed to retrieved order", error})
+    } catch (error) {
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({ message, details });
     }
 }
 
 
 export const getOrderById = async (req, reply) => {
-    try{
-        const {orderId } = req.params;
-      
+    try {
+        const { orderId } = req.params;
+
         const order = await Order.findById(orderId).populate(
             "customer branch items.item deliveryPartner"
         )
 
-        if(!order){
-            return reply.status(404).send({message: "Order not found"})
+
+        if (!order) {
+            return reply.status(404).send({ message: "Order not found" })
         }
 
-        return reply.status(200).send({
-            message: "Get Order successfully",
-            order
-        });
+        return reply.status(200).send({ message: "Get Order successfully", order });
 
-    }catch(error){
-        return reply.status(500).send({message: "Failed to retrieved order", error})
+    } catch (error) {
+        // Use the custom error handler to format the error
+        const { statusCode, message, details } = handleError(error);
+        return reply.status(statusCode).send({ message, details });
     }
 }
