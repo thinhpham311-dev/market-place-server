@@ -30,7 +30,7 @@ const start = async () => {
         if (err) {
             console.log(err)
         } else {
-            console.log(`Blinkit Started on http://localhost:${port}${admin.options.rootPath}`)
+            console.log(`${port}${admin.options.rootPath}`)
         }
     })
 
