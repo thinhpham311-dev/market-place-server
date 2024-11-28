@@ -6,7 +6,7 @@ import { registerRoutes } from "./src/routes/index.js";
 import fastifySocketIO from "fastify-socket.io"
 
 
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 10000;
 
 const start = async () => {
     await connectDB(process.env.MONGODB_URI)
