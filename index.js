@@ -25,12 +25,12 @@ const start = async () => {
 
     app.listen({
         port: port,
-        host: '0.0.0.0',
+        host: '127.0.0.1',
     }, (err, addr) => {
         if (err) {
             console.log(err)
         } else {
-            console.log(`http://0.0.0.0:${port}${admin.options.rootPath}`)
+            console.log(`http://127.0.0.1:${port}${admin.options.rootPath}`)
         }
     })
 
