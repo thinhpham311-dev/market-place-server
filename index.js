@@ -25,7 +25,7 @@ const start = async () => {
 
     app.listen({
         port: port,
-        host: '127.0.0.1',
+        host: '0.0.0.0',
     }, (err, addr) => {
         if (err) {
             console.log(err)
