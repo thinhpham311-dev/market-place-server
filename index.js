@@ -30,7 +30,7 @@ const start = async () => {
         if (err) {
             console.log(err)
         } else {
-            console.log(`http://localhost:${port}${admin.options.rootPath}`)
+            console.log(`http://0.0.0.0:${port}${admin.options.rootPath}`)
         }
     })
 
