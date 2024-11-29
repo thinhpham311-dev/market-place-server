@@ -5,7 +5,6 @@ import { admin, buildAdminRouter } from "./src/config/setup.js";
 import { registerRoutes } from "./src/routes/index.js";
 import fastifySocketIO from "fastify-socket.io"
 
-
 const port = process.env.PORT || 5000;
 
 const start = async () => {
@@ -25,7 +24,8 @@ const start = async () => {
     await buildAdminRouter(app);
 
     app.listen({
-        port: port
+        port: port,
+        host: '0.0.0.0',
     }, (err, addr) => {
         if (err) {
             console.log(err)
