@@ -16,8 +16,8 @@ var Card = exports.Card = function Card(_ref) {
     buttonText = _ref.buttonText,
     props = _objectWithoutProperties(_ref, _excluded);
   return /*#__PURE__*/_react["default"].createElement(_designSystem.Box, {
-    variant: "card",
-    "data-css": "default-dashboard"
+    "data-css": "default-dashboard",
+    variant: "container"
   }, /*#__PURE__*/_react["default"].createElement(_designSystem.Box, {
     flex: true,
     flexDirection: "row"

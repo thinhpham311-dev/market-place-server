@@ -4,7 +4,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.sessionStore = exports.authenticate = exports.PORT = exports.COOKIE_PASSWORD = void 0;
+exports.sessionStore = exports.authenticate = exports.COOKIE_PASSWORD = void 0;
 require("dotenv/config");
 var _session = _interopRequireDefault(require("@fastify/session"));
 var _connectMongodbSession = _interopRequireDefault(require("connect-mongodb-session"));
@@ -74,5 +74,4 @@ var authenticate = exports.authenticate = /*#__PURE__*/function () {
 //     }
 // }
 
-var PORT = exports.PORT = process.env.PORT || 3000;
 var COOKIE_PASSWORD = exports.COOKIE_PASSWORD = process.env.COOKIE_PASSWORD;

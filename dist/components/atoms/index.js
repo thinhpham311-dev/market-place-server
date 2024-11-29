@@ -15,16 +15,16 @@ Object.defineProperty(exports, "Column", {
     return _Grid.Column;
   }
 });
+Object.defineProperty(exports, "CustomAvatar", {
+  enumerable: true,
+  get: function get() {
+    return _Avatar.CustomAvatar;
+  }
+});
 Object.defineProperty(exports, "CustomTable", {
   enumerable: true,
   get: function get() {
     return _Table.CustomTable;
-  }
-});
-Object.defineProperty(exports, "Image", {
-  enumerable: true,
-  get: function get() {
-    return _Image.Image;
   }
 });
 Object.defineProperty(exports, "Row", {
@@ -36,4 +36,4 @@ Object.defineProperty(exports, "Row", {
 var _Grid = require("./Grid");
 var _Card = require("./Card");
 var _Table = require("./Table");
-var _Image = require("./Image");
+var _Avatar = require("./Avatar");

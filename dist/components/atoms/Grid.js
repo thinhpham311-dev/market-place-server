@@ -10,7 +10,10 @@ var _templateObject, _templateObject2;
 function _taggedTemplateLiteral(e, t) { return t || (t = e.slice(0)), Object.freeze(Object.defineProperties(e, { raw: { value: Object.freeze(t) } })); }
 // Utility function to generate grid-column string for different breakpoints
 var getWidthString = function getWidthString(span) {
-  if (!span) return;
+  if (!span) {
+    return;
+  }
+  ;
   return "grid-column: span ".concat(span, ";"); // Use 'span' directly
 };
 var Row = exports.Row = (0, _styledComponents.styled)(_designSystem.Box)(_templateObject || (_templateObject = _taggedTemplateLiteral(["\n    display: grid;\n    grid-template-columns: repeat(12, minmax(0, 1fr)); \n    ", "; \n    padding: 10px;\n    width: 100%;\n"])), function (_ref) {

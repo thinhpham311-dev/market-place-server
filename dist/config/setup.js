@@ -13,6 +13,7 @@ var _config = require("./config.js");
 var _themes = require("@adminjs/themes");
 var _index2 = require("../components/index.js");
 var _icons = require("../constants/icons.js");
+var _properties = require("../constants/properties.js");
 function _getRequireWildcardCache(e) { if ("function" != typeof WeakMap) return null; var r = new WeakMap(), t = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(e) { return e ? t : r; })(e); }
 function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; if (null === e || "object" != _typeof(e) && "function" != typeof e) return { "default": e }; var t = _getRequireWildcardCache(r); if (t && t.has(e)) return t.get(e); var n = { __proto__: null }, a = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var u in e) if ("default" !== u && {}.hasOwnProperty.call(e, u)) { var i = a ? Object.getOwnPropertyDescriptor(e, u) : null; i && (i.get || i.set) ? Object.defineProperty(n, u, i) : n[u] = e[u]; } return n["default"] = e, t && t.set(e, n), n; }
 function _interopRequireDefault(e) { return e && e.__esModule ? e : { "default": e }; }
@@ -52,22 +53,17 @@ var admin = exports.admin = new _adminjs["default"]({
     resource: Models.Category,
     options: {
       parent: _icons.productParent,
-      filterProperties: ["name"]
+      filterProperties: ["name"],
+      listProperties: ["image", "name"],
+      properties: (0, _properties.categoriesProperties)(_index2.Components)
     }
   }, {
     resource: Models.Product,
     options: {
       parent: _icons.productParent,
-      filterProperties: ["name", "price", "discountPrice", "image"],
-      properties: {
-        image: {
-          isSortable: true,
-          isFilterable: true,
-          components: {
-            list: _index2.Components.ImageCell
-          }
-        }
-      }
+      filterProperties: ["name", "price", "discountPrice"],
+      listProperties: ["image", "name", "quantity", "price", "discountPrice", "category"],
+      properties: (0, _properties.productProperties)(_index2.Components)
     }
   }, {
     resource: Models.Counter,
@@ -82,11 +78,33 @@ var admin = exports.admin = new _adminjs["default"]({
       filterProperties: ["customer", "deliveryPartner", "status", "createdAt", "updatedAt"]
     }
   }],
+  componentLoader: _index2.componentLoader,
   dashboard: {
     component: _index2.Components.Dashboard
   },
-  componentLoader: _index2.componentLoader,
   branding: _icons.branding,
+  locale: {
+    language: 'en',
+    translations: {
+      en: {
+        components: {
+          Login: {
+            welcomeHeader: "Welcome to Market Place Accounts",
+            welcomeMessage: "Welcome to Admin Panel",
+            welcomeImage: "",
+            properties: {
+              email: "Email user",
+              password: "Password user"
+            },
+            loginButton: "Submit"
+          }
+        },
+        messages: {
+          welcomeOnBoard_title: 'New dashboard title'
+        }
+      }
+    }
+  },
   defaultTheme: _themes.dark.id,
   availableThemes: [_themes.dark, _themes.light, _themes.noSidebar],
   rootPath: "/admin"

@@ -50,36 +50,33 @@ var DashboardComponent = function DashboardComponent() {
     xs: "12",
     lg: "12",
     md: "12",
-    sm: "12",
-    variant: "container",
-    "data-css": "default-dashboard"
+    sm: "12"
+  }, /*#__PURE__*/_react["default"].createElement(_designSystem.Header.H3, null, "Hello Thinh Pham")), /*#__PURE__*/_react["default"].createElement(_atoms.Column, {
+    xs: "12",
+    lg: "12",
+    md: "12",
+    sm: "12"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.Card, {
     title: "Sales Overviews"
   }, /*#__PURE__*/_react["default"].createElement(_molecules.AreaChartComponent, null))), /*#__PURE__*/_react["default"].createElement(_atoms.Column, {
     xs: "12",
     lg: "5",
     md: "12",
-    sm: "12",
-    variant: "container",
-    "data-css": "default-dashboard"
+    sm: "12"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.Card, {
     title: "Product Status"
   }, /*#__PURE__*/_react["default"].createElement(_molecules.PieChartComponent, null))), /*#__PURE__*/_react["default"].createElement(_atoms.Column, {
     xs: "12",
     lg: "7",
     md: "12",
-    sm: "12",
-    variant: "container",
-    "data-css": "default-dashboard"
+    sm: "12"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.Card, {
     title: "Customer"
   }, /*#__PURE__*/_react["default"].createElement(_molecules.LineChartComponent, null))), /*#__PURE__*/_react["default"].createElement(_atoms.Column, {
     xs: "12",
     lg: "5",
     md: "12",
-    sm: "12",
-    variant: "container",
-    "data-css": "default-dashboard"
+    sm: "12"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.Card, {
     title: "Sales By Category"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.CustomTable, {
@@ -89,9 +86,7 @@ var DashboardComponent = function DashboardComponent() {
     xs: "12",
     lg: "7",
     md: "12",
-    sm: "12",
-    variant: "container",
-    "data-css": "default-dashboard"
+    sm: "12"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.Card, {
     title: "Most Sold Products"
   }, /*#__PURE__*/_react["default"].createElement(_atoms.CustomTable, {
