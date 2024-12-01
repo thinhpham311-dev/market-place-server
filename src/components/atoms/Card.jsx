@@ -3,7 +3,7 @@ import { Box, Header, Button } from '@adminjs/design-system';
 
 
 export const Card = ({ children, title, buttonText, ...props }) => {
-    return <Box data-css="default-dashboard" variant="container">
+    return <Box data-css="default-dashboard" variant="container" >
         <Box flex flexDirection="row" >
             <Box flexGrow={1}>
                 <Header.H4>{title}</Header.H4>

@@ -20,6 +20,18 @@ const productProperties = (Components, ...rest) => {
     }
 }
 
+const reviewProperties = (Components, ...rest) => {
+    return {
+        comment: {
+            isVisible: { edit: true, show: true },
+            components: {
+                edit: Components.TextAreaInput,  // Use custom component in list view
+                show: Components.TextAreaInput,
+            }
+        }
+    }
+}
+
 const categoriesProperties = (Components, ...rest) => {
     return {
         image: {
@@ -37,5 +49,6 @@ const categoriesProperties = (Components, ...rest) => {
 
 export {
     productProperties,
-    categoriesProperties
+    categoriesProperties,
+    reviewProperties
 }

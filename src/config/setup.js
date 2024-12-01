@@ -11,7 +11,7 @@ import {
     orderParent,
     branding
 } from '../constants/icons.js';
-import { productProperties, categoriesProperties } from '../constants/properties.js'
+import { productProperties, categoriesProperties, reviewProperties } from '../constants/properties.js'
 
 AdminJS.registerAdapter(AdminJSMongoose)
 
@@ -66,6 +66,14 @@ export const admin = new AdminJS({
                 filterProperties: ["name", "price", "discountPrice"],
                 listProperties: ["image", "name", "quantity", "price", "discountPrice", "category"],
                 properties: productProperties(Components)
+            }
+        },
+        {
+            resource: Models.Review,
+            options: {
+                parent: productParent,
+                listProperties: ["productId", "userId", "rating", "createdAt"],
+                properties: reviewProperties(Components)
             }
         },
         {
